@@ -1,65 +1,77 @@
+import { getDb } from "@/lib/db";
+import { SocialCard } from "@/components/social-card";
+import { HeaderActions } from "@/components/header-actions";
 import Image from "next/image";
 
-export default function Home() {
+export const revalidate = 0; // Ensure fresh data on every request for now
+
+export default async function Home() {
+  const db = await getDb();
+  const { settings, platforms } = db;
+
+  // Sort: Active first, then by order
+  // Actually usually just by order. Let's trust the 'order' field.
+  const sortedPlatforms = platforms
+    .sort((a, b) => a.order - b.order)
+    .filter(p => p.status !== 'hidden');
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <main className="min-h-screen bg-background text-foreground flex flex-col items-center selection:bg-indigo-500/20 relative">
+      <HeaderActions />
+
+      {/* Cover Image Area */}
+      <div className="w-full h-64 md:h-80 relative bg-neutral-900 overflow-hidden">
+        {settings.coverImage ? (
+          <Image
+            src={settings.coverImage}
+            alt="Cover"
+            fill
+            className="object-cover opacity-90 transition-transform duration-700 hover:scale-105"
+            priority
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-indigo-900 via-purple-900 to-neutral-900" />
+        )}
+        {/* Gradient Overlay for smooth blending */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+      </div>
+
+      {/* Profile Header (Overlapping) */}
+      <div className="w-full max-w-7xl px-4 flex flex-col items-center -mt-20 relative z-10 mb-12 space-y-4 animate-in fade-in slide-in-from-bottom-8 duration-700">
+        {settings.avatar && (
+          <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-background shadow-2xl bg-neutral-800">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src={settings.avatar}
+              alt={settings.siteName}
+              fill
+              className="object-cover"
+              priority
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+        )}
+        <div className="text-center max-w-xl space-y-2">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{settings.siteName}</h1>
+          <p className="text-neutral-400 text-lg">{settings.description}</p>
         </div>
-      </main>
-    </div>
+      </div>
+
+      {/* Grid Container */}
+      {/* 
+         Desktop: 4 columns (grid-cols-4)
+         Tablet: 2 columns (grid-cols-2)
+         Mobile: 1 column (grid-cols-1)
+         
+         Max width constraints to keep "9:16" cards reasonable size.
+      */}
+      <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 pb-20">
+        {sortedPlatforms.map((platform) => (
+          <SocialCard key={platform.id} platform={platform} userSettings={settings} />
+        ))}
+      </div>
+
+      <footer className="mt-auto text-neutral-600 text-sm py-8">
+        <p>© {new Date().getFullYear()} {settings.siteName}</p>
+      </footer>
+    </main>
   );
 }

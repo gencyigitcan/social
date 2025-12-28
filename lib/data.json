@@ -1,0 +1,124 @@
+{
+    "settings": {
+        "siteName": "Yiğitcan Genç",
+        "avatar": "https://github.com/gencyigitcan.png",
+        "coverImage": "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2670&auto=format&fit=crop",
+        "description": "Digital Creator | Developer",
+        "theme": "dark"
+    },
+    "platforms": [
+        {
+            "id": "instagram",
+            "platform": "instagram",
+            "title": "Instagram",
+            "active": true,
+            "url": "https://instagram.com/gencyigitcan",
+            "order": 1
+        },
+        {
+            "id": "linkedin",
+            "platform": "linkedin",
+            "title": "LinkedIn",
+            "active": true,
+            "url": "https://linkedin.com/in/gencyigitcan",
+            "order": 2
+        },
+        {
+            "id": "twitter",
+            "platform": "x",
+            "title": "X",
+            "active": true,
+            "url": "https://x.com/gencyigitcan",
+            "order": 3
+        },
+        {
+            "id": "website",
+            "platform": "website",
+            "title": "Website",
+            "active": true,
+            "url": "https://gencyigitcan.com",
+            "order": 4
+        },
+        {
+            "id": "youtube",
+            "platform": "youtube",
+            "title": "YouTube",
+            "active": false,
+            "url": "https://youtube.com/@username",
+            "order": 5
+        },
+        {
+            "id": "tiktok",
+            "platform": "tiktok",
+            "title": "TikTok",
+            "active": false,
+            "url": "https://tiktok.com/@username",
+            "order": 6,
+            "status": "hidden"
+        },
+        {
+            "id": "github",
+            "platform": "github",
+            "title": "GitHub",
+            "active": false,
+            "url": "https://github.com/username",
+            "order": 7
+        },
+        {
+            "id": "behance",
+            "platform": "behance",
+            "title": "Behance",
+            "active": false,
+            "url": "https://behance.net/username",
+            "order": 8
+        },
+        {
+            "id": "dribbble",
+            "platform": "dribbble",
+            "title": "Dribbble",
+            "active": false,
+            "url": "https://dribbble.com/username",
+            "order": 9
+        },
+        {
+            "id": "spotify",
+            "platform": "spotify",
+            "title": "Spotify",
+            "active": false,
+            "url": "https://open.spotify.com/user/username",
+            "order": 10
+        },
+        {
+            "id": "twitch",
+            "platform": "twitch",
+            "title": "Twitch",
+            "active": false,
+            "url": "https://twitch.tv/username",
+            "order": 11
+        },
+        {
+            "id": "discord",
+            "platform": "discord",
+            "title": "Discord",
+            "active": false,
+            "url": "https://discord.gg/username",
+            "order": 12
+        },
+        {
+            "id": "whatsapp",
+            "platform": "whatsapp",
+            "title": "WhatsApp",
+            "active": false,
+            "url": "https://wa.me/number",
+            "order": 13
+        },
+        {
+            "id": "email",
+            "platform": "email",
+            "title": "Email",
+            "active": false,
+            "url": "mailto:email@example.com",
+            "order": 14
+        }
+    ]
+}
