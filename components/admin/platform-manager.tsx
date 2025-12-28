@@ -34,13 +34,26 @@ export function PlatformManager({ initialPlatforms }: { initialPlatforms: Social
             setPlatforms((items) => {
                 const oldIndex = items.findIndex((i) => i.id === active.id);
                 const newIndex = items.findIndex((i) => i.id === over?.id);
-                const newOrder = arrayMove(items, oldIndex, newIndex);
-                const updates = newOrder.map((item, index) => ({
-                    id: item.id,
+
+                // Create reordered array
+                const reorderedItems = arrayMove(items, oldIndex, newIndex);
+
+                // Assign new order values to maintain consistency
+                const newOrderWithIndices = reorderedItems.map((item, index) => ({
+                    ...item,
                     order: index + 1
                 }));
+
+                // Transform to the format expected by the server action
+                const updates = newOrderWithIndices.map((item) => ({
+                    id: item.id,
+                    order: item.order
+                }));
+
+                // Trigger server update
                 reorderPlatformsAction(updates);
-                return newOrder.map((item, index) => ({ ...item, order: index + 1 }));
+
+                return newOrderWithIndices;
             });
         }
     };
