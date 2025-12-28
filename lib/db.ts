@@ -60,11 +60,10 @@ export async function getDb(): Promise<DbSchema> {
                 description: "",
                 theme: "dark"
             },
-        },
             platforms: [],
-                users: []
-    };
-}
+            users: []
+        };
+    }
 }
 
 export async function updateDb(newData: DbSchema): Promise<void> {
