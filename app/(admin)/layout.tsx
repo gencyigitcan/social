@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard, ExternalLink, LogOut } from "lucide-react";
+import { logoutAction } from "@/app/actions/auth";
 
 export default function AdminLayout({
     children,
@@ -34,7 +35,13 @@ export default function AdminLayout({
                         <ExternalLink size={16} />
                         <span className="hidden sm:inline">View Site</span>
                     </Link>
-                    <button className="text-sm text-red-400 hover:text-red-300 flex items-center gap-2 transition-colors">
+                    <button
+                        onClick={async () => {
+                            await logoutAction();
+                            window.location.href = "/admin/login";
+                        }}
+                        className="text-sm text-red-400 hover:text-red-300 flex items-center gap-2 transition-colors"
+                    >
                         <LogOut size={16} />
                         <span className="hidden sm:inline">Logout</span>
                     </button>

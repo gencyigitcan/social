@@ -7,7 +7,7 @@ import { Lock, UserPlus } from "lucide-react";
 import { checkHasUsersAction, createFirstUserAction, loginAction } from "@/app/actions/auth";
 
 export default function LoginPage() {
-    const [mode, setMode] = useState<'checking' | 'login' | 'setup'>('checking');
+    const [mode, setMode] = useState<'checking' | 'login' | 'setup' | 'error'>('checking');
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -16,7 +16,12 @@ export default function LoginPage() {
 
     useEffect(() => {
         checkHasUsersAction().then(res => {
-            setMode(res.hasUsers ? 'login' : 'setup');
+            if (res.success) {
+                setMode(res.hasUsers ? 'login' : 'setup');
+            } else {
+                setMode('error');
+                setError(res.error || "System Unavailable");
+            }
         });
     }, []);
 
@@ -49,6 +54,23 @@ export default function LoginPage() {
         return (
             <div className="min-h-screen flex items-center justify-center bg-black">
                 <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+            </div>
+        );
+    }
+
+    if (mode === 'error') {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-black p-4">
+                <div className="text-red-500 bg-red-500/10 p-6 rounded-lg border border-red-500/20 max-w-md text-center">
+                    <h1 className="text-xl font-bold mb-2">System Unavailable</h1>
+                    <p className="text-neutral-300">{error}</p>
+                    <button
+                        onClick={() => window.location.reload()}
+                        className="mt-4 px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded transition-colors"
+                    >
+                        Retry
+                    </button>
+                </div>
             </div>
         );
     }
@@ -112,8 +134,8 @@ export default function LoginPage() {
                             disabled={loading}
                             onClick={handleSubmit}
                             className={`w-full font-medium py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${mode === 'setup'
-                                    ? "bg-green-600 hover:bg-green-500 text-white"
-                                    : "bg-indigo-600 hover:bg-indigo-500 text-white"
+                                ? "bg-green-600 hover:bg-green-500 text-white"
+                                : "bg-indigo-600 hover:bg-indigo-500 text-white"
                                 }`}
                         >
                             {loading ? "Processing..." : (mode === 'setup' ? "Create Account" : "Sign In")}

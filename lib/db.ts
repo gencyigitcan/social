@@ -41,10 +41,11 @@ export async function getDb(): Promise<DbSchema> {
         try {
             const data = await kv.get<DbSchema>(KV_KEY);
             if (data) return data;
-            // If KV is empty, try to seed it with local JSON content?
-            // For now, fall through to local file to "seed" the initial state conceptually
+            // If KV is empty (first run), fall through to seed execution from local file
         } catch (error) {
             console.error("Vercel KV Connection Error:", error);
+            // CRITICAL: Do not fall back to local file on connection error, as it would reset security settings
+            throw new Error("Database connection failed");
         }
     }
 
