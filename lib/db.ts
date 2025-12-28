@@ -23,9 +23,16 @@ export interface SiteSettings {
     theme: 'dark' | 'light';
 }
 
+export interface User {
+    id: string;
+    email: string;
+    password: string; // Plaintext for simplicity in this project scope, or simple hash
+}
+
 export interface DbSchema {
     settings: SiteSettings;
     platforms: SocialPlatform[];
+    users?: User[];
 }
 
 export async function getDb(): Promise<DbSchema> {
@@ -53,9 +60,11 @@ export async function getDb(): Promise<DbSchema> {
                 description: "",
                 theme: "dark"
             },
-            platforms: []
-        };
-    }
+        },
+            platforms: [],
+                users: []
+    };
+}
 }
 
 export async function updateDb(newData: DbSchema): Promise<void> {

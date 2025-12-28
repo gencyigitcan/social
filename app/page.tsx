@@ -33,7 +33,7 @@ export default async function Home() {
           <div className="w-full h-full bg-gradient-to-br from-indigo-900 via-purple-900 to-neutral-900" />
         )}
         {/* Gradient Overlay for smooth blending */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-10 pointer-events-none" />
       </div>
 
       {/* Profile Header (Overlapping) */}
