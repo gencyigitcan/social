@@ -641,6 +641,8 @@ function WebsiteCard({ platform, settings }: { platform: SocialPlatform, setting
 
 // --- EMAIL ---
 function EmailCard({ platform, settings }: { platform: SocialPlatform, settings: SiteSettings }) {
+    const emailAddress = platform.url.startsWith('mailto:') ? platform.url.replace('mailto:', '') : 'email@example.com';
+
     return (
         <div className="relative w-full aspect-[9/16] rounded-3xl overflow-hidden bg-[#e5e5e5] text-neutral-800 flex flex-col font-sans select-none border border-white">
             {/* Envelope Flap Effect */}
@@ -664,7 +666,7 @@ function EmailCard({ platform, settings }: { platform: SocialPlatform, settings:
                     </div>
                     <div className="flex items-center gap-3 text-sm text-neutral-600">
                         <span className="font-semibold w-12 text-neutral-400">From:</span>
-                        <span className="text-neutral-300 italic">your@email.com</span>
+                        <span className="text-neutral-500 italic truncate">{emailAddress}</span>
                     </div>
                 </div>
 

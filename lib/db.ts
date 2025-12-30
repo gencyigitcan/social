@@ -76,13 +76,15 @@ export async function updateDb(newData: DbSchema): Promise<void> {
             return;
         } catch (e) {
             console.error("Using Vercel KV but update failed", e);
+            throw new Error("Failed to save to Vercel KV");
         }
     }
 
-    // Fallback to local file (development or no KV link)
+    // Fallback to local file (development only)
     try {
         await fs.writeFile(DATA_FILE, JSON.stringify(newData, null, 2));
     } catch (e) {
         console.error("Local file write failed", e);
+        throw new Error("Failed to save to local storage");
     }
 }

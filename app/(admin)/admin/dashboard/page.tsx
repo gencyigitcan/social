@@ -7,6 +7,7 @@ export default async function DashboardPage() {
     const db = await getDb();
     // Sort by order so admin sees the logical order
     const sorted = db.platforms.sort((a, b) => a.order - b.order);
+    const isPersistent = !!process.env.KV_REST_API_URL;
 
     return (
         <div className="animate-in fade-in duration-500">
@@ -17,7 +18,7 @@ export default async function DashboardPage() {
                 <p className="text-neutral-400 mt-2 text-lg">Dijital varlığınızı gerçek zamanlı yönetin.</p>
             </div>
 
-            <AdminDashboardClient platforms={sorted} settings={db.settings} />
+            <AdminDashboardClient platforms={sorted} settings={db.settings} isPersistent={isPersistent} />
         </div>
     )
 }
