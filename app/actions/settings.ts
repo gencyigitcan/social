@@ -1,0 +1,47 @@
+"use server";
+
+import { getDb, updateDb, SiteSettings } from "@/lib/db";
+import { revalidatePath } from "next/cache";
+
+const DEFAULT_SETTINGS: SiteSettings = {
+    siteName: "Yiğitcan Genç",
+    description: "Digital Creator & Developer",
+    avatar: "https://github.com/shadcn.png", // Stand-in default
+    theme: "dark",
+    coverImage: "" // Empty as per request to remove it
+};
+
+export async function updateSettings(newSettings: Partial<SiteSettings>) {
+    const db = await getDb();
+
+    // Merge existing settings with new updates
+    const updatedSettings = {
+        ...db.settings,
+        ...newSettings
+    };
+
+    // Update DB
+    await updateDb({
+        ...db,
+        settings: updatedSettings
+    });
+
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
+
+    return { success: true };
+}
+
+export async function resetSettings() {
+    const db = await getDb();
+
+    await updateDb({
+        ...db,
+        settings: DEFAULT_SETTINGS
+    });
+
+    revalidatePath("/");
+    revalidatePath("/admin/dashboard");
+
+    return { success: true };
+}

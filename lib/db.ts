@@ -13,6 +13,8 @@ export interface SocialPlatform {
     status?: 'active' | 'coming_soon' | 'hidden';
     url: string;
     order: number;
+    content?: string; // Custom text/description for the card
+    defaultContent?: string; // To allow resetting
 }
 
 export interface SiteSettings {

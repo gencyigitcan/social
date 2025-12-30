@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { SocialPlatform } from "@/lib/db";
 import { togglePlatformAction, updatePlatformAction, reorderPlatformsAction } from "@/app/actions/social";
-import { Save, Eye, EyeOff, GripVertical, ChevronRight, X } from "lucide-react";
+import { Save, Eye, EyeOff, GripVertical, ChevronRight, X, RotateCcw } from "lucide-react";
 import { SocialCard } from "@/components/social-card";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -247,6 +247,63 @@ function PlatformDetailEditor({ platform, setPlatforms, onClose }: { platform: S
                         placeholder="https://..."
                         className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all"
                     />
+                </div>
+
+                {/* Title & Content Editing */}
+                <div className="space-y-4 pt-4 border-t border-neutral-800">
+                    <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                            <label className="text-sm font-medium text-neutral-300">Platform Title</label>
+                            <button
+                                onClick={() => {
+                                    // Simple reset heuristic: Capitalize platform key or use a known map
+                                    const defaultTitle = p.platform.charAt(0).toUpperCase() + p.platform.slice(1);
+                                    setLocalP({ ...p, title: defaultTitle });
+                                    setIsDirty(true);
+                                }}
+                                className="text-[10px] text-neutral-500 hover:text-white underline transition-colors"
+                            >
+                                Reset Default
+                            </button>
+                        </div>
+                        <input
+                            type="text"
+                            value={p.title}
+                            onChange={(e) => {
+                                setLocalP({ ...p, title: e.target.value });
+                                setIsDirty(true);
+                            }}
+                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all"
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                            <label className="text-sm font-medium text-neutral-300">Card Content / Status</label>
+                            <button
+                                onClick={() => {
+                                    setLocalP({ ...p, content: "" }); // Reset clears custom content
+                                    setIsDirty(true);
+                                }}
+                                className="text-[10px] text-neutral-500 hover:text-white underline transition-colors"
+                            >
+                                Reset Default
+                            </button>
+                        </div>
+                        <textarea
+                            value={p.content || ""}
+                            onChange={(e) => {
+                                setLocalP({ ...p, content: e.target.value });
+                                setIsDirty(true);
+                            }}
+                            rows={2}
+                            placeholder="Custom text (e.g. 'Tap to follow', 'Latest post...')"
+                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all resize-none"
+                        />
+                        <p className="text-[10px] text-neutral-500">
+                            Leave empty to use the default layout for this platform.
+                        </p>
+                    </div>
                 </div>
 
                 {isDirty && (

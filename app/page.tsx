@@ -19,25 +19,10 @@ export default async function Home() {
     <main className="min-h-screen bg-background text-foreground flex flex-col items-center selection:bg-indigo-500/20 relative">
       <HeaderActions />
 
-      {/* Cover Image Area */}
-      <div className="w-full h-64 md:h-80 relative bg-neutral-900 overflow-hidden">
-        {settings.coverImage ? (
-          <Image
-            src={settings.coverImage}
-            alt="Cover"
-            fill
-            className="object-cover opacity-90 transition-transform duration-700 hover:scale-105"
-            priority
-          />
-        ) : (
-          <div className="w-full h-full bg-gradient-to-br from-indigo-900 via-purple-900 to-neutral-900" />
-        )}
-        {/* Gradient Overlay for smooth blending */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-10 pointer-events-none" />
-      </div>
 
-      {/* Profile Header (Overlapping) */}
-      <div className="w-full max-w-7xl px-4 flex flex-col items-center -mt-20 relative z-10 mb-12 space-y-4 animate-in fade-in slide-in-from-bottom-8 duration-700">
+
+      {/* Profile Header */}
+      <div className="w-full max-w-7xl px-4 flex flex-col items-center mt-20 relative z-10 mb-12 space-y-4 animate-in fade-in slide-in-from-bottom-8 duration-700">
         {settings.avatar && (
           <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-background shadow-2xl bg-neutral-800">
             <Image

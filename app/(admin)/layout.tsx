@@ -33,7 +33,7 @@ export default function AdminLayout({
                         className="text-sm text-neutral-400 hover:text-white flex items-center gap-2 transition-colors"
                     >
                         <ExternalLink size={16} />
-                        <span className="hidden sm:inline">View Site</span>
+                        <span className="hidden sm:inline">Siteyi Görüntüle</span>
                     </Link>
                     <button
                         onClick={async () => {
@@ -43,7 +43,7 @@ export default function AdminLayout({
                         className="text-sm text-red-400 hover:text-red-300 flex items-center gap-2 transition-colors"
                     >
                         <LogOut size={16} />
-                        <span className="hidden sm:inline">Logout</span>
+                        <span className="hidden sm:inline">Çıkış Yap</span>
                     </button>
                 </div>
             </header>

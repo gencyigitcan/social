@@ -1,5 +1,5 @@
 import { getDb } from "@/lib/db";
-import { PlatformManager } from "@/components/admin/platform-manager";
+import { AdminDashboardClient } from "@/components/admin/dashboard-client";
 
 export const revalidate = 0;
 
@@ -12,12 +12,12 @@ export default async function DashboardPage() {
         <div className="animate-in fade-in duration-500">
             <div className="mb-10 border-b border-neutral-800 pb-6">
                 <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
-                    Control Center
+                    Kontrol Merkezi
                 </h1>
-                <p className="text-neutral-400 mt-2 text-lg">Manage your digital presence in real-time.</p>
+                <p className="text-neutral-400 mt-2 text-lg">Dijital varlığınızı gerçek zamanlı yönetin.</p>
             </div>
 
-            <PlatformManager initialPlatforms={sorted} />
+            <AdminDashboardClient platforms={sorted} settings={db.settings} />
         </div>
     )
 }
