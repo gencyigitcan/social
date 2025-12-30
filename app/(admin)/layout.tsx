@@ -22,8 +22,8 @@ export default function AdminLayout({
         <div className="min-h-screen bg-neutral-900 text-neutral-100 flex flex-col">
             <header className="h-16 border-b border-neutral-800 flex items-center justify-between px-6 bg-neutral-900/50 backdrop-blur sticky top-0 z-50">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-bold">A</div>
-                    <span className="font-semibold tracking-tight">Antigravity</span>
+                    <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-bold">S</div>
+                    <span className="font-semibold tracking-tight">Social</span>
                 </div>
 
                 <div className="flex items-center gap-4">

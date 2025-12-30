@@ -11,10 +11,10 @@
       "id": "instagram",
       "platform": "instagram",
       "title": "Instagram",
-      "active": true,
+      "active": false,
       "url": "https://instagram.com/gencyigitcan",
-      "order": 6,
-      "status": "active",
+      "order": 8,
+      "status": "hidden",
       "content": ""
     },
     {
@@ -23,7 +23,7 @@
       "title": "LinkedIn",
       "active": true,
       "url": "https://linkedin.com/in/gencyigitcan",
-      "order": 2
+      "order": 1
     },
     {
       "id": "twitter",
@@ -31,7 +31,7 @@
       "title": "X",
       "active": true,
       "url": "https://x.com/gencyigitcan",
-      "order": 3
+      "order": 6
     },
     {
       "id": "website",
@@ -39,25 +39,25 @@
       "title": "Website",
       "active": true,
       "url": "https://gencyigitcan.com",
-      "order": 4
+      "order": 3
     },
     {
       "id": "youtube",
       "platform": "youtube",
       "title": "YouTube",
-      "active": true,
+      "active": false,
       "url": "https://youtube.com/@username",
-      "order": 1,
-      "status": "active"
+      "order": 5,
+      "status": "coming_soon"
     },
     {
       "id": "tiktok",
       "platform": "tiktok",
       "title": "TikTok",
-      "active": true,
+      "active": false,
       "url": "https://tiktok.com/@username",
-      "order": 5,
-      "status": "active"
+      "order": 7,
+      "status": "hidden"
     },
     {
       "id": "github",
@@ -65,53 +65,53 @@
       "title": "GitHub",
       "active": true,
       "url": "https://github.com/username",
-      "order": 8,
+      "order": 4,
       "status": "active"
     },
     {
       "id": "behance",
       "platform": "behance",
       "title": "Behance",
-      "active": true,
+      "active": false,
       "url": "https://behance.net/username",
-      "order": 9,
-      "status": "active"
+      "order": 10,
+      "status": "hidden"
     },
     {
       "id": "dribbble",
       "platform": "dribbble",
       "title": "Dribbble",
-      "active": true,
+      "active": false,
       "url": "https://dribbble.com/username",
-      "order": 10,
-      "status": "active"
+      "order": 11,
+      "status": "hidden"
     },
     {
       "id": "spotify",
       "platform": "spotify",
       "title": "Spotify",
-      "active": true,
+      "active": false,
       "url": "https://open.spotify.com/user/username",
-      "order": 11,
-      "status": "active"
+      "order": 12,
+      "status": "coming_soon"
     },
     {
       "id": "twitch",
       "platform": "twitch",
       "title": "Twitch",
-      "active": true,
+      "active": false,
       "url": "https://twitch.tv/username",
-      "order": 12,
-      "status": "active"
+      "order": 13,
+      "status": "hidden"
     },
     {
       "id": "discord",
       "platform": "discord",
       "title": "Discord",
-      "active": true,
+      "active": false,
       "url": "https://discord.gg/username",
-      "order": 13,
-      "status": "active"
+      "order": 14,
+      "status": "hidden"
     },
     {
       "id": "whatsapp",
@@ -119,7 +119,7 @@
       "title": "WhatsApp",
       "active": true,
       "url": "https://wa.me/number",
-      "order": 7,
+      "order": 9,
       "status": "active"
     },
     {
@@ -128,7 +128,7 @@
       "title": "Email",
       "active": true,
       "url": "mailto:email@example.com",
-      "order": 14,
+      "order": 2,
       "status": "active"
     }
   ],
