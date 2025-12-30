@@ -266,7 +266,7 @@ function GithubCard({ platform, settings }: { platform: SocialPlatform, settings
 
                     <div className="border border-neutral-800 rounded-lg p-3 bg-[#0d1117] hover:bg-[#161b22] transition-colors">
                         <div className="flex items-center gap-2 font-semibold text-sm text-blue-400 mb-1">
-                            <span className="truncate">project-antigravity</span>
+                            <span className="truncate">project-social</span>
                             <span className="px-1.5 py-0.5 rounded-full border border-neutral-700 text-[9px] text-neutral-400">Public</span>
                         </div>
                         <p className="text-[11px] text-neutral-500 line-clamp-1">Next.js social wrapper application</p>
@@ -483,13 +483,15 @@ function WhatsAppCard({ platform, settings }: { platform: SocialPlatform, settin
                     <span className="text-[9px] text-[#8696a0] absolute bottom-1 right-2">10:00 AM</span>
                 </div>
 
-                <div className="self-end bg-[#005c4b] rounded-lg rounded-tr-none p-2 max-w-[85%] z-10 shadow-sm relative">
-                    <p className="text-sm text-neutral-100 pr-5 pb-1">
-                        {platform.content || "Hey there! Feel free to message me directly here."}
-                    </p>
-                    <div className="absolute bottom-1 right-1.5 flex items-center gap-0.5">
-                        <span className="text-[9px] text-[#8696a0cc]">10:02 AM</span>
-                        <div className="text-[#53bdeb]"><Check size={12} className="-ml-1" /><Check size={12} className="-ml-2" /></div>
+                <div className="self-end bg-[#005c4b] rounded-lg rounded-tr-none p-2 pl-3 max-w-[85%] z-10 shadow-sm min-w-[120px]">
+                    <div className="flex flex-col">
+                        <p className="text-sm text-neutral-100 break-words leading-snug">
+                            {platform.content || "Hey there! Feel free to message me directly here."}
+                        </p>
+                        <div className="flex items-center justify-end gap-1 mt-1 -mb-1 opacity-80">
+                            <span className="text-[10px] text-[#ffffff99]">10:02 AM</span>
+                            <div className="text-[#53bdeb] flex"><Check size={14} className="-ml-1" /><Check size={14} className="-ml-2" /></div>
+                        </div>
                     </div>
                 </div>
             </div>
