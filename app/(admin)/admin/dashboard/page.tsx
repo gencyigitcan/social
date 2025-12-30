@@ -6,7 +6,7 @@ export const revalidate = 0;
 export default async function DashboardPage() {
     const db = await getDb();
     // Sort by order so admin sees the logical order
-    const sorted = db.platforms.sort((a, b) => a.order - b.order);
+    const sorted = [...db.platforms].sort((a, b) => a.order - b.order);
     const isPersistent = !!process.env.KV_REST_API_URL;
 
     return (

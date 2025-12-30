@@ -25,7 +25,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 
 export function PlatformManager({ initialPlatforms }: { initialPlatforms: SocialPlatform[] }) {
-    const [platforms, setPlatforms] = useState(initialPlatforms.sort((a, b) => a.order - b.order));
+    const [platforms, setPlatforms] = useState([...initialPlatforms].sort((a, b) => a.order - b.order));
     const [selectedPlatformId, setSelectedPlatformId] = useState<string | null>(null);
 
     const handleDragEnd = async (event: DragEndEvent) => {
@@ -59,7 +59,11 @@ export function PlatformManager({ initialPlatforms }: { initialPlatforms: Social
     };
 
     const sensors = useSensors(
-        useSensor(PointerSensor),
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 8,
+            },
+        }),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
         })

@@ -11,7 +11,7 @@ export default async function Home() {
 
   // Sort: Active first, then by order
   // Actually usually just by order. Let's trust the 'order' field.
-  const sortedPlatforms = platforms
+  const sortedPlatforms = [...platforms]
     .sort((a, b) => a.order - b.order)
     .filter(p => p.status !== 'hidden');
 
