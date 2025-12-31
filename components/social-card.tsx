@@ -641,7 +641,18 @@ function WebsiteCard({ platform, settings }: { platform: SocialPlatform, setting
 
 // --- EMAIL ---
 function EmailCard({ platform, settings }: { platform: SocialPlatform, settings: SiteSettings }) {
-    const emailAddress = platform.url.startsWith('mailto:') ? platform.url.replace('mailto:', '') : 'email@example.com';
+    // Smartly extract email: remove mailto: prefix if present.
+    // If the URL is empty or generic placeholder, fallback is handled but we try to use what's there.
+    const rawUrl = platform.url || "";
+    let emailAddress = rawUrl.replace(/^mailto:/, '');
+
+    // If the stripped address looks like a URL (http), it's probably wrong, but we display it or a placeholder.
+    if (emailAddress.startsWith('http')) {
+        emailAddress = "email@example.com";
+    }
+
+    // If completely empty after strip (e.g. user entered "mailto:"), fallback
+    if (!emailAddress) emailAddress = "email@example.com";
 
     return (
         <div className="relative w-full aspect-[9/16] rounded-3xl overflow-hidden bg-[#e5e5e5] text-neutral-800 flex flex-col font-sans select-none border border-white">
@@ -773,9 +784,15 @@ export function SocialCard({ platform, userSettings }: { platform: SocialPlatfor
         );
     }
 
+    // Auto-fix mailto link if missing
+    let finalUrl = platform.url;
+    if (platform.platform === 'email' && !finalUrl.startsWith('mailto:') && !finalUrl.startsWith('http')) {
+        finalUrl = `mailto:${finalUrl}`;
+    }
+
     return (
         <a
-            href={platform.url}
+            href={finalUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="block w-full"
