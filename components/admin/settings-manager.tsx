@@ -20,8 +20,13 @@ export function SettingsManager({ initialSettings }: { initialSettings: SiteSett
     const handleSave = async () => {
         try {
             setIsSaving(true);
-            await updateSettings(settings);
-            setIsDirty(false);
+            const result = await updateSettings(settings);
+            if (result.success) {
+                setIsDirty(false);
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Ayarlar kaydedilirken bir hata oluştu.");
         } finally {
             setIsSaving(false);
         }
@@ -116,8 +121,8 @@ export function SettingsManager({ initialSettings }: { initialSettings: SiteSett
                             onClick={handleSave}
                             disabled={!isDirty || isSaving}
                             className={`w-full py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-all ${isDirty
-                                    ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20"
-                                    : "bg-neutral-800 text-neutral-500 cursor-not-allowed"
+                                ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20"
+                                : "bg-neutral-800 text-neutral-500 cursor-not-allowed"
                                 }`}
                         >
                             {isSaving ? (

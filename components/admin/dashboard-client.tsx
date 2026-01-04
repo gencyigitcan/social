@@ -42,9 +42,9 @@ export function AdminDashboardClient({ platforms, settings, isPersistent }: Admi
 
                 {/* Storage Indicator */}
                 <div className="flex items-center gap-2 text-xs px-3 py-1.5 rounded-full bg-neutral-800/50 border border-neutral-800 self-start sm:self-auto">
-                    <div className={`w-2 h-2 rounded-full ${isPersistent ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' : 'bg-yellow-500 animate-pulse'}`} />
+                    <div className={`w-2 h-2 rounded-full ${isPersistent ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' : 'bg-blue-500'}`} />
                     <span className="text-neutral-400 font-medium tracking-tight">
-                        {isPersistent ? 'Cloud Storage' : 'Local Storage (Ephemeral)'}
+                        {isPersistent ? 'Cloud Database' : 'Local Database'}
                     </span>
                 </div>
             </div>

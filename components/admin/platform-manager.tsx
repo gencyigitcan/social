@@ -199,10 +199,18 @@ function PlatformDetailEditor({ platform, setPlatforms, onClose }: { platform: S
     };
 
     const handleSave = async () => {
-        await updatePlatformAction(p);
-        setPlatforms(prev => prev.map(x => x.id === p.id ? p : x));
-        setIsDirty(false);
-        onClose();
+        try {
+            const result = await updatePlatformAction(p);
+            if (result.success) {
+                setPlatforms(prev => prev.map(x => x.id === p.id ? p : x));
+                setIsDirty(false);
+                onClose();
+            } else {
+                alert("Failed to save changes: " + (result.error || "Unknown error"));
+            }
+        } catch (e) {
+            alert("An error occurred while saving.");
+        }
     };
 
     return (
