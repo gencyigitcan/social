@@ -52,6 +52,29 @@ const formatNumber = (num: number) => {
     return new Intl.NumberFormat('en-US', { notation: "compact", maximumFractionDigits: 1 }).format(num);
 };
 
+const getHandleFromUrl = (url: string, prefix: string = "@") => {
+    if (!url) return "";
+    try {
+        // Handle mailto separately
+        if (url.startsWith('mailto:')) return url.replace('mailto:', '');
+
+        // Ensure protocol for URL parsing
+        const safeUrl = url.startsWith('http') ? url : `https://${url}`;
+        const urlObj = new URL(safeUrl);
+        const parts = urlObj.pathname.split('/').filter(p => p !== '');
+
+        // Usually the last part is the username
+        if (parts.length > 0) {
+            return `${prefix}${parts[parts.length - 1]}`;
+        }
+    } catch (e) {
+        // Fallback for non-standard URLs
+        const text = url.split('/').pop();
+        if (text) return `${prefix}${text}`;
+    }
+    return "";
+};
+
 // --- INSTAGRAM ---
 function InstagramCard({ platform, settings }: { platform: SocialPlatform, settings: SiteSettings }) {
     return (
@@ -63,7 +86,7 @@ function InstagramCard({ platform, settings }: { platform: SocialPlatform, setti
                             {settings.avatar ? <Image src={settings.avatar} alt="User" fill className="object-cover" /> : <div className="w-full h-full bg-neutral-200" />}
                         </div>
                     </div>
-                    <span className="text-xs font-semibold lowercase">{platform.title.toLowerCase().replace(/\s/g, '')}</span>
+                    <span className="text-xs font-semibold lowercase">{getHandleFromUrl(platform.url) || platform.title.toLowerCase()}</span>
                 </div>
                 <MoreHorizontal size={16} />
             </div>
@@ -83,7 +106,7 @@ function InstagramCard({ platform, settings }: { platform: SocialPlatform, setti
                 </div>
                 <p className="text-xs font-semibold mb-1">2,342 likes</p>
                 <p className="text-xs line-clamp-2">
-                    <span className="font-semibold mr-1">{platform.title.toLowerCase().replace(/\s/g, '')}</span>
+                    <span className="font-semibold mr-1">{getHandleFromUrl(platform.url, "") || platform.title.toLowerCase()}</span>
                     <span>{platform.content || "Check out my latest updates! 📸 #life #design"}</span>
                 </p>
             </div>
@@ -135,7 +158,7 @@ function XCard({ platform, settings }: { platform: SocialPlatform, settings: Sit
                 <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1 text-sm">
                         <span className="font-bold truncate">{settings.siteName}</span>
-                        <span className="text-neutral-500 truncate">@{platform.title.toLowerCase().replace(/\s/g, '')}</span>
+                        <span className="text-neutral-500 truncate">{getHandleFromUrl(platform.url) || `@${platform.title.toLowerCase()}`}</span>
                     </div>
                     <p className="text-sm mt-0.5 whitespace-pre-wrap">{platform.content || "Just shipped a new update! 🚢 Check out the link below. #buildinginpublic"}</p>
                 </div>
@@ -249,7 +272,7 @@ function GithubCard({ platform, settings }: { platform: SocialPlatform, settings
                 </div>
                 <div>
                     <h3 className="font-semibold text-neutral-200">{platform.title}</h3>
-                    <p className="text-xs text-neutral-500">@{settings.siteName.replace(/\s/g, '').toLowerCase()}</p>
+                    <p className="text-xs text-neutral-500">{getHandleFromUrl(platform.url) || `@${settings.siteName.replace(/\s/g, '').toLowerCase()}`}</p>
                 </div>
             </div>
 
@@ -311,13 +334,13 @@ function TikTokCard({ platform, settings }: { platform: SocialPlatform, settings
 
                 <div className="flex items-end justify-between">
                     <div className="space-y-2 mb-2 w-3/4">
-                        <div className="font-bold text-shadow-sm">@{settings.siteName.replace(/\s/g, '').toLowerCase()}</div>
+                        <div className="font-bold text-shadow-sm">{getHandleFromUrl(platform.url) || `@${settings.siteName.replace(/\s/g, '').toLowerCase()}`}</div>
                         <div className="text-sm leading-tight drop-shadow-md">
                             {platform.content || "Check out my latest TikToks! 🎵 #trending #viral"}
                         </div>
                         <div className="flex items-center gap-2 text-xs font-semibold">
                             <Music size={12} />
-                            <span className="truncate">Original Sound - @{settings.siteName}</span>
+                            <span className="truncate">Original Sound - {getHandleFromUrl(platform.url) || `@${settings.siteName}`}</span>
                         </div>
                     </div>
 
