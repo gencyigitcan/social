@@ -12,36 +12,44 @@ const DEFAULT_SETTINGS: SiteSettings = {
 };
 
 export async function updateSettings(newSettings: Partial<SiteSettings>) {
-    const db = await getDb();
+    try {
+        const db = await getDb();
 
-    // Merge existing settings with new updates
-    const updatedSettings = {
-        ...db.settings,
-        ...newSettings
-    };
+        // Merge existing settings with new updates
+        const updatedSettings = {
+            ...db.settings,
+            ...newSettings
+        };
 
-    // Update DB
-    await updateDb({
-        ...db,
-        settings: updatedSettings
-    });
+        // Update DB
+        await updateDb({
+            ...db,
+            settings: updatedSettings
+        });
 
-    revalidatePath("/");
-    revalidatePath("/admin/dashboard");
+        revalidatePath("/");
+        revalidatePath("/admin/dashboard");
 
-    return { success: true };
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message || "Failed to update settings" };
+    }
 }
 
 export async function resetSettings() {
-    const db = await getDb();
+    try {
+        const db = await getDb();
 
-    await updateDb({
-        ...db,
-        settings: DEFAULT_SETTINGS
-    });
+        await updateDb({
+            ...db,
+            settings: DEFAULT_SETTINGS
+        });
 
-    revalidatePath("/");
-    revalidatePath("/admin/dashboard");
+        revalidatePath("/");
+        revalidatePath("/admin/dashboard");
 
-    return { success: true };
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message || "Failed to reset settings" };
+    }
 }

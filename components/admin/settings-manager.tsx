@@ -23,10 +23,12 @@ export function SettingsManager({ initialSettings }: { initialSettings: SiteSett
             const result = await updateSettings(settings);
             if (result.success) {
                 setIsDirty(false);
+            } else {
+                alert("Hata: " + (result.error || "Bilinmeyen hata"));
             }
         } catch (error) {
             console.error(error);
-            alert("Ayarlar kaydedilirken bir hata oluştu.");
+            alert("Ayarlar kaydedilirken beklenmedik bir hata oluştu.");
         } finally {
             setIsSaving(false);
         }
@@ -37,10 +39,17 @@ export function SettingsManager({ initialSettings }: { initialSettings: SiteSett
 
         try {
             setIsSaving(true);
-            await resetSettings();
-            // We need to refresh the page or update local state properly, 
-            // but for now a reload is safest to get defaults
-            window.location.reload();
+            const result = await resetSettings();
+
+            if (result.success) {
+                // We need to refresh the page or update local state properly, 
+                // but for now a reload is safest to get defaults
+                window.location.reload();
+            } else {
+                alert("Sıfırlama hatası: " + (result.error || "Bilinmeyen hata"));
+            }
+        } catch (error) {
+            alert("Sıfırlama sırasında hata oluştu.");
         } finally {
             setIsSaving(false);
         }

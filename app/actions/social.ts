@@ -16,9 +16,9 @@ export async function updatePlatformAction(platform: SocialPlatform) {
             return { success: true };
         }
         return { success: false, error: "Platform not found" };
-    } catch (error) {
+    } catch (error: any) {
         console.error("Update error:", error);
-        return { success: false, error: "Database error" };
+        return { success: false, error: error.message || "Database error" };
     }
 }
 
@@ -34,8 +34,8 @@ export async function togglePlatformAction(id: string, active: boolean) {
             return { success: true };
         }
         return { success: false, error: "Platform not found" };
-    } catch (error) {
-        return { success: false, error: "Database error" };
+    } catch (error: any) {
+        return { success: false, error: error.message || "Database error" };
     }
 }
 
@@ -55,8 +55,8 @@ export async function reorderPlatformsAction(items: { id: string; order: number 
         revalidatePath("/");
         revalidatePath("/admin/dashboard");
         return { success: true };
-    } catch (error) {
+    } catch (error: any) {
         console.error("Reorder error:", error);
-        return { success: false, error: "Database error" };
+        return { success: false, error: error.message || "Database error" };
     }
 }

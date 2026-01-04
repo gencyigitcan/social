@@ -83,8 +83,8 @@ export async function updateDb(newData: DbSchema): Promise<void> {
     // Fallback to local file (development only)
     try {
         await fs.writeFile(DATA_FILE, JSON.stringify(newData, null, 2));
-    } catch (e) {
+    } catch (e: any) {
         console.error("Local file write failed", e);
-        throw new Error("Failed to save to local storage");
+        throw new Error(`Failed to save to local storage: ${e.message}`);
     }
 }
