@@ -2,20 +2,19 @@
   "settings": {
     "siteName": "Yiğitcan Genç",
     "avatar": "https://github.com/gencyigitcan.png",
-    "coverImage": "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2670&auto=format&fit=crop",
+    "coverImage": "",
     "description": "Digital Creator | Developer",
     "theme": "dark"
   },
   "platforms": [
     {
-      "id": "instagram",
-      "platform": "instagram",
-      "title": "Instagram",
-      "active": false,
-      "url": "https://instagram.com/gencyigitcan",
-      "order": 8,
-      "status": "hidden",
-      "content": ""
+      "id": "github",
+      "platform": "github",
+      "title": "GitHub",
+      "active": true,
+      "url": "https://github.com/gencyigitcan",
+      "order": 1,
+      "status": "active"
     },
     {
       "id": "linkedin",
@@ -23,7 +22,8 @@
       "title": "LinkedIn",
       "active": true,
       "url": "https://linkedin.com/in/gencyigitcan",
-      "order": 1
+      "order": 2,
+      "status": "active"
     },
     {
       "id": "twitter",
@@ -31,7 +31,8 @@
       "title": "X",
       "active": true,
       "url": "https://x.com/gencyigitcan",
-      "order": 6
+      "order": 3,
+      "status": "active"
     },
     {
       "id": "website",
@@ -39,7 +40,26 @@
       "title": "Website",
       "active": true,
       "url": "https://gencyigitcan.com",
-      "order": 3
+      "order": 4,
+      "status": "active"
+    },
+    {
+      "id": "email",
+      "platform": "email",
+      "title": "Email",
+      "active": true,
+      "url": "mailto:yigitcangenc@gmail.com",
+      "order": 5,
+      "status": "active"
+    },
+    {
+      "id": "instagram",
+      "platform": "instagram",
+      "title": "Instagram",
+      "active": true,
+      "url": "https://instagram.com/gencyigitcan",
+      "order": 6,
+      "status": "active"
     },
     {
       "id": "youtube",
@@ -47,7 +67,7 @@
       "title": "YouTube",
       "active": false,
       "url": "https://youtube.com/@username",
-      "order": 5,
+      "order": 7,
       "status": "coming_soon"
     },
     {
@@ -56,17 +76,8 @@
       "title": "TikTok",
       "active": false,
       "url": "https://tiktok.com/@username",
-      "order": 7,
+      "order": 8,
       "status": "hidden"
-    },
-    {
-      "id": "github",
-      "platform": "github",
-      "title": "GitHub",
-      "active": true,
-      "url": "https://github.com/username",
-      "order": 4,
-      "status": "active"
     },
     {
       "id": "behance",
@@ -74,7 +85,7 @@
       "title": "Behance",
       "active": false,
       "url": "https://behance.net/username",
-      "order": 10,
+      "order": 9,
       "status": "hidden"
     },
     {
@@ -83,7 +94,7 @@
       "title": "Dribbble",
       "active": false,
       "url": "https://dribbble.com/username",
-      "order": 11,
+      "order": 10,
       "status": "hidden"
     },
     {
@@ -92,7 +103,7 @@
       "title": "Spotify",
       "active": false,
       "url": "https://open.spotify.com/user/username",
-      "order": 12,
+      "order": 11,
       "status": "coming_soon"
     },
     {
@@ -101,7 +112,7 @@
       "title": "Twitch",
       "active": false,
       "url": "https://twitch.tv/username",
-      "order": 13,
+      "order": 12,
       "status": "hidden"
     },
     {
@@ -110,26 +121,17 @@
       "title": "Discord",
       "active": false,
       "url": "https://discord.gg/username",
-      "order": 14,
+      "order": 13,
       "status": "hidden"
     },
     {
       "id": "whatsapp",
       "platform": "whatsapp",
       "title": "WhatsApp",
-      "active": true,
+      "active": false,
       "url": "https://wa.me/number",
-      "order": 9,
-      "status": "active"
-    },
-    {
-      "id": "email",
-      "platform": "email",
-      "title": "Email",
-      "active": true,
-      "url": "mailto:email@example.com",
-      "order": 2,
-      "status": "active"
+      "order": 14,
+      "status": "hidden"
     }
   ],
   "users": [
