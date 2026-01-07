@@ -807,10 +807,19 @@ export function SocialCard({ platform, userSettings }: { platform: SocialPlatfor
         );
     }
 
-    // Auto-fix mailto link if missing
+    // Auto-fix usage of "github.com/user" without protocol
     let finalUrl = platform.url;
-    if (platform.platform === 'email' && !finalUrl.startsWith('mailto:') && !finalUrl.startsWith('http')) {
-        finalUrl = `mailto:${finalUrl}`;
+    if (!finalUrl) finalUrl = "";
+
+    if (platform.platform === 'email') {
+        if (!finalUrl.startsWith('mailto:') && !finalUrl.startsWith('http')) {
+            finalUrl = `mailto:${finalUrl}`;
+        }
+    } else {
+        // For other platforms, ensure https:// if no protocol is present
+        if (finalUrl && !finalUrl.startsWith('http') && !finalUrl.startsWith('mailto:')) {
+            finalUrl = `https://${finalUrl}`;
+        }
     }
 
     return (

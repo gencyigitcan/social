@@ -27,8 +27,8 @@ export async function updateSettings(newSettings: Partial<SiteSettings>) {
             settings: updatedSettings
         });
 
-        revalidatePath("/");
-        revalidatePath("/admin/dashboard");
+        revalidatePath("/", "layout");
+        revalidatePath("/admin/dashboard", "layout");
 
         return { success: true };
     } catch (error: any) {
@@ -45,8 +45,8 @@ export async function resetSettings() {
             settings: DEFAULT_SETTINGS
         });
 
-        revalidatePath("/");
-        revalidatePath("/admin/dashboard");
+        revalidatePath("/", "layout");
+        revalidatePath("/admin/dashboard", "layout");
 
         return { success: true };
     } catch (error: any) {

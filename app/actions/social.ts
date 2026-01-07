@@ -11,8 +11,8 @@ export async function updatePlatformAction(platform: SocialPlatform) {
         if (index !== -1) {
             db.platforms[index] = platform;
             await updateDb(db);
-            revalidatePath("/");
-            revalidatePath("/admin/dashboard");
+            revalidatePath("/", "layout");
+            revalidatePath("/admin/dashboard", "layout");
             return { success: true };
         }
         return { success: false, error: "Platform not found" };
@@ -29,8 +29,8 @@ export async function togglePlatformAction(id: string, active: boolean) {
         if (platform) {
             platform.active = active;
             await updateDb(db);
-            revalidatePath("/");
-            revalidatePath("/admin/dashboard");
+            revalidatePath("/", "layout");
+            revalidatePath("/admin/dashboard", "layout");
             return { success: true };
         }
         return { success: false, error: "Platform not found" };
@@ -52,8 +52,8 @@ export async function reorderPlatformsAction(items: { id: string; order: number 
         });
 
         await updateDb(db);
-        revalidatePath("/");
-        revalidatePath("/admin/dashboard");
+        revalidatePath("/", "layout");
+        revalidatePath("/admin/dashboard", "layout");
         return { success: true };
     } catch (error: any) {
         console.error("Reorder error:", error);
