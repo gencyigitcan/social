@@ -16,7 +16,7 @@ export default async function Home() {
     .filter(p => p.status !== 'hidden');
 
   return (
-    <main className="min-h-screen bg-background text-foreground flex flex-col items-center selection:bg-indigo-500/20 relative">
+    <main className="min-h-screen bg-background text-foreground flex flex-col items-center selection:bg-cyan-500/20 relative">
       <HeaderActions />
 
 

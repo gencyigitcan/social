@@ -26,7 +26,7 @@ export function AdminDashboardClient({ platforms, settings, isPersistent }: Admi
                     >
                         Platformlar
                         {activeTab === 'platforms' && (
-                            <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-500 rounded-full" />
+                            <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 rounded-full" />
                         )}
                     </button>
                     <button
@@ -35,7 +35,7 @@ export function AdminDashboardClient({ platforms, settings, isPersistent }: Admi
                     >
                         Profil Ayarları
                         {activeTab === 'profile' && (
-                            <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-500 rounded-full" />
+                            <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 rounded-full" />
                         )}
                     </button>
                 </div>

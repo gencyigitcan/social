@@ -79,14 +79,14 @@ export function SettingsManager({ initialSettings }: { initialSettings: SiteSett
                     {/* Site Name */}
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-neutral-300 flex items-center gap-2">
-                            <Type size={16} className="text-indigo-400" />
+                            <Type size={16} className="text-cyan-400" />
                             İsim / Başlık
                         </label>
                         <input
                             type="text"
                             value={settings.siteName}
                             onChange={(e) => handleChange("siteName", e.target.value)}
-                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all placeholder:text-neutral-600"
+                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all placeholder:text-neutral-600"
                             placeholder="Adınız veya Sitenizin Adı"
                         />
                     </div>
@@ -94,14 +94,14 @@ export function SettingsManager({ initialSettings }: { initialSettings: SiteSett
                     {/* Description */}
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-neutral-300 flex items-center gap-2">
-                            <AlignLeft size={16} className="text-pink-400" />
+                            <AlignLeft size={16} className="text-blue-400" />
                             Açıklama / Biyografi
                         </label>
                         <textarea
                             value={settings.description}
                             onChange={(e) => handleChange("description", e.target.value)}
                             rows={3}
-                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all placeholder:text-neutral-600 resize-none"
+                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all placeholder:text-neutral-600 resize-none"
                             placeholder="Kendinizden kısaca bahsedin..."
                         />
                     </div>
@@ -109,14 +109,14 @@ export function SettingsManager({ initialSettings }: { initialSettings: SiteSett
                     {/* Avatar URL */}
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-neutral-300 flex items-center gap-2">
-                            <ImageIcon size={16} className="text-green-400" />
+                            <ImageIcon size={16} className="text-emerald-400" />
                             Profil Resmi URL
                         </label>
                         <input
                             type="text"
                             value={settings.avatar}
                             onChange={(e) => handleChange("avatar", e.target.value)}
-                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all placeholder:text-neutral-600"
+                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all placeholder:text-neutral-600"
                             placeholder="https://..."
                         />
                         <p className="text-[10px] text-neutral-500">
@@ -130,7 +130,7 @@ export function SettingsManager({ initialSettings }: { initialSettings: SiteSett
                             onClick={handleSave}
                             disabled={!isDirty || isSaving}
                             className={`w-full py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-all ${isDirty
-                                ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20"
+                                ? "bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-500/20"
                                 : "bg-neutral-800 text-neutral-500 cursor-not-allowed"
                                 }`}
                         >

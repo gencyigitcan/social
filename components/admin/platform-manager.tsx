@@ -257,7 +257,7 @@ function PlatformDetailEditor({ platform, setPlatforms, onClose }: { platform: S
                             setIsDirty(true);
                         }}
                         placeholder="https://..."
-                        className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all"
+                        className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all"
                     />
                 </div>
 
@@ -285,7 +285,7 @@ function PlatformDetailEditor({ platform, setPlatforms, onClose }: { platform: S
                                 setLocalP({ ...p, title: e.target.value });
                                 setIsDirty(true);
                             }}
-                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all"
+                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all"
                         />
                     </div>
 
@@ -310,7 +310,7 @@ function PlatformDetailEditor({ platform, setPlatforms, onClose }: { platform: S
                             }}
                             rows={2}
                             placeholder="Custom text (e.g. 'Tap to follow', 'Latest post...')"
-                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all resize-none"
+                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all resize-none"
                         />
                         <p className="text-[10px] text-neutral-500">
                             Leave empty to use the default layout for this platform.
@@ -323,7 +323,7 @@ function PlatformDetailEditor({ platform, setPlatforms, onClose }: { platform: S
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         onClick={handleSave}
-                        className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-all shadow-lg hover:shadow-indigo-500/20"
+                        className="w-full bg-cyan-600 hover:bg-cyan-500 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-all shadow-lg hover:shadow-cyan-500/20"
                     >
                         <Save size={18} /> Save Changes
                     </motion.button>

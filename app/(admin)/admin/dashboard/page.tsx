@@ -12,7 +12,7 @@ export default async function DashboardPage() {
     return (
         <div className="animate-in fade-in duration-500">
             <div className="mb-10 border-b border-neutral-800 pb-6">
-                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500">
                     Kontrol Merkezi
                 </h1>
                 <p className="text-neutral-400 mt-2 text-lg">Dijital varlığınızı gerçek zamanlı yönetin.</p>

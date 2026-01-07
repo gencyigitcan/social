@@ -41,7 +41,7 @@ export function HeaderActions() {
                 {theme === "dark" ? (
                     <Sun size={20} className="hover:text-yellow-400 transition-colors" />
                 ) : (
-                    <Moon size={20} className="hover:text-violet-600 transition-colors" />
+                    <Moon size={20} className="hover:text-cyan-600 transition-colors" />
                 )}
             </button>
 

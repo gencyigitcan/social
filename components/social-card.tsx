@@ -632,8 +632,8 @@ function WebsiteCard({ platform, settings }: { platform: SocialPlatform, setting
             </div>
 
             {/* Web Content Preview */}
-            <div className="flex-1 bg-gradient-to-br from-indigo-900/20 to-purple-900/20 relative flex flex-col items-center justify-center p-6 text-center space-y-4">
-                <div className="w-20 h-20 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 shadow-2xl flex items-center justify-center mb-2">
+            <div className="flex-1 bg-gradient-to-br from-cyan-900/20 to-blue-900/20 relative flex flex-col items-center justify-center p-6 text-center space-y-4">
+                <div className="w-20 h-20 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-2xl flex items-center justify-center mb-2">
                     <span className="font-bold text-3xl">Aa</span>
                 </div>
 
