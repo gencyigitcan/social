@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { kv } from '@vercel/kv';
+import { createClient } from '@libsql/client';
 
 const DATA_FILE = path.join(process.cwd(), 'lib/data.json');
 const KV_KEY = 'social_data';
@@ -10,7 +11,7 @@ export interface SocialPlatform {
     platform: string;
     title: string;
     active: boolean;
-    status?: 'active' | 'coming_soon' | 'hidden';
+    status: 'active' | 'coming_soon' | 'hidden';
     url: string;
     order: number;
     content?: string;
@@ -37,82 +38,135 @@ export interface DbSchema {
     users?: User[];
 }
 
-// In Vercel (or similar production envs), the project root is often read-only.
-// We'll fallback to /tmp/data.json if we detect a write error, or just use /tmp/data.json by default if we want to be safe in those envs.
-// However, /tmp is ephemeral. For Vercel production, you MUST use Vercel KV or another DB.
-// Since the user is likely seeing this on a deployed instance without KV, we'll try to use /tmp as a fallback to at least make it work for a session.
-const TMP_DATA_FILE = '/tmp/data.json';
-
-// Helper to get the correct writable path
-async function getWritableFilePath() {
+// Default/Initial Data Loader
+async function getInitialData(): Promise<DbSchema> {
     try {
-        await fs.access(DATA_FILE, fs.constants.W_OK);
-        return DATA_FILE;
-    } catch {
-        // If we can't write to the standard file (e.g. EROFS), use /tmp
-        return TMP_DATA_FILE;
-    }
-}
-
-export async function getDb(): Promise<DbSchema> {
-    // Priority: Vercel KV > Local JSON File
-    if (process.env.KV_REST_API_URL) {
-        try {
-            const data = await kv.get<DbSchema>(KV_KEY);
-            if (data) return data;
-        } catch (error) {
-            console.error("Vercel KV Connection Error:", error);
-            throw new Error("Database connection failed");
-        }
-    }
-
-    // Try reading from the writable path first (e.g. /tmp/data.json) if it exists
-    try {
-        const filePath = await getWritableFilePath();
-        // If using /tmp and it doesn't exist, we need to seed it from our read-only source
-        if (filePath === TMP_DATA_FILE) {
-            try {
-                await fs.access(TMP_DATA_FILE);
-            } catch {
-                // TMP file doesn't exist, copy from source
-                const initialData = await fs.readFile(DATA_FILE, 'utf-8');
-                await fs.writeFile(TMP_DATA_FILE, initialData);
-            }
-        }
-
-        const data = await fs.readFile(filePath, 'utf-8');
+        const data = await fs.readFile(DATA_FILE, 'utf-8');
         return JSON.parse(data);
-    } catch (error) {
-        console.error("Local Database read error:", error);
-        // Fallback for first-time read errors
+    } catch (e) {
+        console.error("Failed to load initial data.json", e);
         return {
-            settings: {
-                siteName: "Yiğitcan Genç",
-                avatar: "",
-                description: "",
-                theme: "dark"
-            },
+            settings: { siteName: "User", avatar: "", description: "", theme: "dark" },
             platforms: [],
             users: []
         };
     }
 }
 
+// --- TURSO CLIENT HELPER ---
+function getTursoClient() {
+    const url = process.env.TURSO_DATABASE_URL;
+    const authToken = process.env.TURSO_AUTH_TOKEN;
+    if (url && authToken) {
+        return createClient({ url, authToken });
+    }
+    return null;
+}
+
+export async function getDb(): Promise<DbSchema> {
+    // 1. TURSO (Priority 1)
+    const turso = getTursoClient();
+    if (turso) {
+        try {
+            // Attempt to read from 'app_data' table
+            // We use a simple Key-Value structure: table 'storage', col 'key' (primary), col 'value'
+            // Ensure table exists (lazy init)
+            await turso.execute(`
+                CREATE TABLE IF NOT EXISTS storage (
+                    key TEXT PRIMARY KEY,
+                    value TEXT
+                )
+            `);
+
+            const result = await turso.execute({
+                sql: "SELECT value FROM storage WHERE key = ?",
+                args: [KV_KEY]
+            });
+
+            if (result.rows.length > 0) {
+                const jsonStr = result.rows[0].value as string;
+                return JSON.parse(jsonStr);
+            } else {
+                // First time in Turso: Seed from local file
+                console.log("Turso empty, seeding from initial data...");
+                const initialData = await getInitialData();
+                await turso.execute({
+                    sql: "INSERT INTO storage (key, value) VALUES (?, ?)",
+                    args: [KV_KEY, JSON.stringify(initialData)]
+                });
+                return initialData;
+            }
+        } catch (e) {
+            console.error("Turso Error:", e);
+            // Fallthrough to next method or throw?
+            // If Turso creds are provided but fail, we should probably warn but maybe fallback or throw.
+            // Let's attempt fallback to KV just in case.
+        }
+    }
+
+    // 2. VERCEL KV (Priority 2)
+    if (process.env.KV_REST_API_URL) {
+        try {
+            const data = await kv.get<DbSchema>(KV_KEY);
+            if (data) return data;
+
+            // First time KV
+            console.log("KV empty, seeding from local data...");
+            const initialData = await getInitialData();
+            await kv.set(KV_KEY, initialData);
+            return initialData;
+        } catch (error) {
+            console.error("Vercel KV Connection Error:", error);
+        }
+    }
+
+    // 3. LOCAL FILE (Fallback / Local Dev)
+    // Only used if no cloud options are configured.
+    console.warn("Using LOCAL FILE storage. Data will be lost on deployment reset.");
+    const tmpFile = '/tmp/data.json';
+    try {
+        await fs.access(tmpFile);
+        const data = await fs.readFile(tmpFile, 'utf-8');
+        return JSON.parse(data);
+    } catch {
+        // If /tmp missing, copy from source
+        const initialUtil = await getInitialData();
+        await fs.writeFile(tmpFile, JSON.stringify(initialUtil));
+        return initialUtil;
+    }
+}
+
 export async function updateDb(newData: DbSchema): Promise<void> {
+    // 1. TURSO
+    const turso = getTursoClient();
+    if (turso) {
+        try {
+            await turso.execute({
+                sql: "INSERT INTO storage (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = ?",
+                args: [KV_KEY, JSON.stringify(newData), JSON.stringify(newData)]
+            });
+            return;
+        } catch (e) {
+            console.error("Failed to save to Turso", e);
+            throw new Error("Database save failed (Turso)");
+        }
+    }
+
+    // 2. VERCEL KV
     if (process.env.KV_REST_API_URL) {
         try {
             await kv.set(KV_KEY, newData);
             return;
         } catch (e) {
-            console.error("Using Vercel KV but update failed", e);
-            throw new Error("Failed to save to Vercel KV");
+            console.error("Failed to save to Vercel KV", e);
+            throw new Error("Database save failed (KV)");
         }
     }
 
-    // Fallback to local file
+    // 3. LOCAL
     try {
-        const filePath = await getWritableFilePath();
-        await fs.writeFile(filePath, JSON.stringify(newData, null, 2));
+        const tmpFile = '/tmp/data.json';
+        await fs.writeFile(tmpFile, JSON.stringify(newData, null, 2));
     } catch (e: any) {
         console.error("Local file write failed", e);
         throw new Error(`Failed to save to local storage: ${e.message}`);
